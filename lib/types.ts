@@ -1,137 +1,129 @@
-/**
- * TypeScript interfaces for the Mimica Analytics Platform
- * Based on the processed JSON data structures
- * Version: 1.0.0
- */
+// Types for Mimica Analytics Platform v5
 
-/**
- * Region metrics aggregated data
- * Represents performance metrics for each geographic region
- */
+// Process list types
+export interface ProcessData {
+  id: string
+  name: string
+  version: 'As-Is' | 'To-Be' | 'v1'
+  ease: 'Low' | 'Medium' | 'High'
+  automatability: 'Low' | 'Medium' | 'High' | 'Very High'
+  timeSpent: number // hrs/y
+  created: Date
+  recordedSMEs: number
+  frequency: number // per day
+}
+
+// Raw step data from synthetic dataset
+export interface StepData {
+  task_id: string
+  transaction_id: string
+  region: 'Americas' | 'EMEA' | 'APAC' | 'LATAM' | 'North America'
+  user_id: string
+  role: string
+  variant: 'A' | 'B' | 'C' | 'D' | 'E'
+  step_index: number
+  action_name: string
+  application: string
+  duration_sec: number
+  start_time_sec: number
+  end_time_sec: number
+  decision_outcome?: string
+  auto_score: number
+}
+
+// Step type classification
+export type StepType = 'Action' | 'Semi-structured Input' | 'Decision' | 'Virtualised Action'
+
+// Process metrics
+export interface ProcessMetrics {
+  timeSaved: number // hrs/y
+  automatabilityRating: 'Low' | 'Medium' | 'High' | 'Very High'
+  perSMEPerDay: number
+  numberOfSMEs: number
+  easeOfDeployment: {
+    actions: number
+    semiStructuredInputs: number
+    decisions: number
+    virtualisedActions: number
+  }
+  counts: {
+    actions: number
+    semiStructuredInputs: number
+    decisions: number
+    applications: number
+    websites: number
+    decisionPaths: number
+  }
+  applicationUsage: Array<{
+    name: string
+    percentage: number
+  }>
+  websiteUsage: Array<{
+    name: string
+    percentage: number
+  }>
+}
+
+// Region metrics from processed data
 export interface RegionMetric {
-  region: string;              // Geographic region (e.g., "APAC", "Americas", "EMEA", "LATAM", "NorthAmerica")
-  avg_duration: number;        // Average transaction duration in seconds
-  median_duration: number;     // Median transaction duration in seconds
-  max_duration: number;        // Maximum transaction duration in seconds
-  min_duration: number;        // Minimum transaction duration in seconds
-  avg_step_count: number;      // Average number of steps per transaction
-  transaction_count: number;   // Total number of transactions in this region
+  region: string
+  avg_duration: number
+  median_duration: number
+  max_duration: number
+  min_duration: number
+  avg_step_count: number
+  transaction_count: number
 }
 
-/**
- * Variant distribution by region
- * Shows how many transactions of each variant occur in each region
- */
-export interface VariantDistribution {
-  region: string;   // Geographic region
-  A: number;        // Count of Variant A transactions
-  B: number;        // Count of Variant B transactions
-  C: number;        // Count of Variant C transactions
-  D: number;        // Count of Variant D transactions
-  E: number;        // Count of Variant E transactions
-}
-
-/**
- * Variant-specific metrics
- * Aggregated performance data for each process variant
- */
+// Variant metrics
 export interface VariantMetric {
-  variant: string;             // Variant identifier (A, B, C, D, or E)
-  avg_duration: number;        // Average duration for this variant in seconds
-  median_duration: number;     // Median duration for this variant in seconds
-  step_count: number;          // Number of steps in this variant
-  transaction_count: number;   // Total transactions following this variant
+  variant: string
+  avg_duration: number
+  median_duration: number
+  step_count: number
+  transaction_count: number
 }
 
-/**
- * Bottleneck analysis data
- * Identifies process steps with highest impact on performance
- */
+// Variant distribution
+export interface VariantDistribution {
+  region: string
+  A: number
+  B: number
+  C: number
+  D: number
+  E: number
+}
+
+// Bottleneck
 export interface Bottleneck {
-  action_name: string;      // Name of the process step
-  avg_duration: number;     // Average duration of this step in seconds
-  median_duration: number;  // Median duration of this step in seconds
-  count: number;            // Number of times this step was executed
+  action_name: string
+  avg_duration: number
+  median_duration: number
+  count: number
+  type: StepType
+  impact_score?: number
 }
 
-/**
- * Step-level metrics (same structure as Bottleneck)
- * Detailed metrics for all process steps
- */
-export interface StepMetric {
-  action_name: string;      // Name of the process step
-  avg_duration: number;     // Average duration of this step in seconds
-  median_duration: number;  // Median duration of this step in seconds
-  count: number;            // Number of times this step was executed
+// Process map node
+export interface ProcessNode {
+  id: string
+  type: 'action' | 'decision' | 'start' | 'end'
+  data: {
+    label: string
+    duration?: number
+    automataScore?: number
+    application?: string
+    decisionOutcomes?: string[]
+  }
+  position: { x: number; y: number }
 }
 
-/**
- * Complete metrics collection
- * Used by the context provider to share data across components
- */
-export interface ProcessedMetrics {
-  regionMetrics: RegionMetric[];
-  variantDistribution: VariantDistribution[];
-  variantMetrics: VariantMetric[];
-  bottlenecks: Bottleneck[];
-  stepMetrics: StepMetric[];
-}
-
-/**
- * Filter state for interactive components
- */
-export interface FilterState {
-  selectedRegion: string | null;  // Currently selected region (null = all regions)
-  selectedVariant: string | null; // Currently selected variant (null = all variants)
-}
-
-/**
- * Chart configuration types
- */
-export interface ChartConfig {
-  title: string;
-  subtitle?: string;
-  showLegend?: boolean;
-  showGrid?: boolean;
-  animate?: boolean;
-  colors?: string[];
-}
-
-/**
- * Region names enum for type safety
- */
-export enum Region {
-  APAC = "APAC",
-  Americas = "Americas",
-  EMEA = "EMEA",
-  LATAM = "LATAM",
-  NorthAmerica = "NorthAmerica"
-}
-
-/**
- * Variant names enum for type safety
- */
-export enum Variant {
-  A = "A",
-  B = "B",
-  C = "C",
-  D = "D",
-  E = "E"
-}
-
-/**
- * Helper type for variant distribution keys
- */
-export type VariantKey = keyof Omit<VariantDistribution, 'region'>;
-
-/**
- * Context value type for the metrics provider
- */
-export interface MetricsContextValue {
-  metrics: ProcessedMetrics;
-  filters: FilterState;
-  setSelectedRegion: (region: string | null) => void;
-  setSelectedVariant: (variant: string | null) => void;
-  isLoading: boolean;
-  error: Error | null;
+// Process map edge
+export interface ProcessEdge {
+  id: string
+  source: string
+  target: string
+  label?: string
+  animated?: boolean
+  style?: React.CSSProperties
 }

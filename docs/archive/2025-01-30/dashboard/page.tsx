@@ -7,7 +7,7 @@ import { BottleneckTable } from '@/components/tables/BottleneckTable'
 import { SummaryCards } from '@/components/cards/SummaryCards'
 
 export default function DashboardPage() {
-  const { isLoading, error } = useMetrics()
+  const { isLoading, error, filters, setSelectedRegion } = useMetrics()
 
   if (isLoading) {
     return (
@@ -27,6 +27,21 @@ export default function DashboardPage() {
 
   return (
     <div className="space-y-6">
+      {/* Filter Controls */}
+      {filters.selectedRegion && (
+        <div className="bg-primary-blue/10 border border-primary-blue/20 rounded-lg px-4 py-3 flex items-center justify-between">
+          <p className="text-sm text-text-primary">
+            Showing data for <span className="font-semibold">{filters.selectedRegion}</span> region
+          </p>
+          <button
+            onClick={() => setSelectedRegion(null)}
+            className="text-sm text-primary-blue hover:text-blue-700 font-medium"
+          >
+            Clear Filter
+          </button>
+        </div>
+      )}
+      
       {/* Summary Cards */}
       <section>
         <SummaryCards />
@@ -42,6 +57,7 @@ export default function DashboardPage() {
           <div className="chart-container">
             <RegionChart />
           </div>
+          <p className="text-xs text-text-secondary mt-2">Click on a bar to filter by region</p>
         </section>
 
         {/* Variant Distribution Chart */}

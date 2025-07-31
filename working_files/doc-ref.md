@@ -14,10 +14,13 @@
 | File | Status | Description |
 |------|--------|-------------|
 | docs/challenge-requirements/Product Manager Challenge_ Analytics Platform.md | Active | Original challenge definition |
-| docs/challenge-requirements/Research on Mimica and Process Standardization.md | Active | Background research on Mimica |
-| docs/challenge-requirements/Tree‑of‑Thought Map for Mimica Analytics Challenge.md | Active | Entity relationship mapping |
-| docs/challenge-requirements/Synthetic Data for Mimica Analytics Prototype.md | Active | Data schema and structure guide |
-| docs/challenge-requirements/Technical Implementation Plan (v2) for Next.md | Active | Detailed implementation blueprint |
+| docs/challenge-requirements/prd-v5.pdf | Active | Product Requirements Document v5 - Platform clone & analytics extension |
+| docs/challenge-requirements/design-system-v5.pdf | Active | Design System v5 - Visual language, components & interactions |
+| docs/challenge-requirements/data-guide-v5.pdf | Active | Data Guide v5 - Enhanced synthetic dataset & metrics |
+| docs/challenge-requirements/tot-v5.pdf | Active | Tree of Thought v5 - Entity relationships & gaps analysis |
+| docs/challenge-requirements/research-v5.pdf | Active | Research synthesis on Mimica platform |
+| docs/challenge-requirements/final-report.pdf | Active | Complete implementation report |
+| docs/challenge-requirements/current-platform-screenshots/ | Active | Screenshots of existing Mimica platform UI |
 
 ## Data Files (Active)
 | File | Status | Description |
@@ -36,11 +39,17 @@
 | docs/research/RESEARCH.md | Planned | Consolidated research findings |
 | docs/research/data-analysis.md | Planned | Synthetic data analysis |
 
-## Implementation Documents (To Create)
+## Implementation Documents
 | File | Status | Description |
 |------|--------|-------------|
+| docs/implementation/2025-01-30-emergency-fixes.md | Active | Urgent fixes needed for tomorrow's demo |
 | docs/implementation/component-specs.md | Planned | Detailed component specifications |
 | docs/implementation/api-design.md | Planned | Data loading and API structure |
+
+## Audit Documents
+| File | Status | Description |
+|------|--------|-------------|
+| docs/audit/2025-01-30-implementation-audit.md | Active | Comprehensive gap analysis vs requirements |
 
 ## Design Documents (To Create)
 | File | Status | Description |

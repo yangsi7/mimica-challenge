@@ -65,6 +65,8 @@ export function RegionChart() {
               key={`cell-${index}`} 
               fill={entry.color}
               opacity={filters.selectedRegion === null || filters.selectedRegion === entry.region ? 1 : 0.3}
+              stroke={filters.selectedRegion === entry.region ? '#3B82F6' : 'none'}
+              strokeWidth={filters.selectedRegion === entry.region ? 3 : 0}
             />
           ))}
         </Bar>

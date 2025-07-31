@@ -1,23 +1,74 @@
-import Link from 'next/link'
+'use client'
 
-export default function Home() {
+import { useState } from 'react'
+import { ProcessList } from '@/components/process-list/ProcessList'
+import { SummaryPanel } from '@/components/summary-panel/SummaryPanel'
+import { ProcessProvider } from '@/contexts/ProcessContext'
+
+export default function HomePage() {
+  const [selectedProcessId, setSelectedProcessId] = useState<string | null>(null)
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <div className="text-center space-y-8">
-        <h1 className="text-5xl font-bold text-text-primary">
-          Mimica Analytics Platform
-        </h1>
-        <p className="text-xl text-text-secondary max-w-2xl">
-          Standardize business processes across multiple regions with data-driven insights 
-          from task-mining analytics
-        </p>
-        <Link
-          href="/dashboard"
-          className="inline-flex items-center justify-center px-8 py-3 text-base font-medium text-white bg-primary-blue hover:bg-blue-600 rounded-lg transition-colors"
-        >
-          Open Dashboard
-        </Link>
+    <ProcessProvider>
+      <div className="flex flex-col h-screen bg-bg-secondary">
+        {/* Top Header */}
+        <div className="h-14 bg-bg-primary border-b border-border-primary flex items-center justify-between px-6">
+          <div className="flex items-center gap-8">
+            <h1 className="text-xl font-bold text-text-primary">Mimica</h1>
+            <div className="flex gap-2">
+              <button className="text-sm text-text-secondary hover:text-text-primary">MINER</button>
+              <button className="text-sm text-primary-blue font-semibold border-b-2 border-primary-blue pb-1">MAPPER</button>
+            </div>
+          </div>
+          <div className="flex items-center gap-4">
+            <button className="px-4 py-2 text-sm font-medium text-white bg-primary-blue rounded hover:bg-blue-600">
+              + New Project
+            </button>
+            <button className="px-4 py-2 text-sm font-medium text-text-primary border border-border-primary rounded hover:bg-bg-secondary">
+              View
+            </button>
+            <button className="px-4 py-2 text-sm font-medium text-text-primary border border-border-primary rounded hover:bg-bg-secondary">
+              Share
+            </button>
+            <button className="px-4 py-2 text-sm font-medium text-text-primary border border-border-primary rounded hover:bg-bg-secondary">
+              Export
+            </button>
+          </div>
+        </div>
+        
+        {/* Main Content */}
+        <div className="flex flex-1 overflow-hidden">
+          {/* Sidebar Navigation */}
+          <div className="w-64 bg-bg-primary border-r border-border-primary flex flex-col">
+            {/* Navigation */}
+            <nav className="px-4 py-4 border-b border-border-primary">
+            <a 
+              href="/analytics" 
+              className="flex items-center gap-2 px-3 py-2 text-sm text-text-secondary hover:text-text-primary hover:bg-bg-secondary rounded-md transition-colors"
+            >
+              Cross-Region Analytics
+              <span className="text-xs bg-primary-blue text-white px-2 py-0.5 rounded">New</span>
+            </a>
+          </nav>
+          
+          <ProcessList 
+            selectedProcessId={selectedProcessId}
+            onSelectProcess={setSelectedProcessId}
+          />
+        </div>
+        
+          {/* Main Content Area */}
+          <div className="flex-1 overflow-hidden">
+            {selectedProcessId ? (
+              <SummaryPanel processId={selectedProcessId} />
+            ) : (
+              <div className="flex items-center justify-center h-full text-text-secondary">
+                Select a process to view details
+              </div>
+            )}
+          </div>
+        </div>
       </div>
-    </main>
+    </ProcessProvider>
   )
 }
